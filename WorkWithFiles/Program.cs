@@ -73,64 +73,72 @@ namespace WorkWithFiles
                         {
                             Console.WriteLine("Какую строчку вы хотите изменить?");
                             int num = InputInfo.InputInt();
-                            if (num < clients.Count)
+                            if (num > 0)
                             {
-                                bool NewEnter = false;
-                                do
+                                if (num < clients.Count)
                                 {
-                                    Console.WriteLine("Что вы хотите изменить: \n1.ID \n2.Passport number\n3.Payment\nВыберите номер перед пунктом меню для перехода.");
-                                    int num2 = InputInfo.InputNavigate1();
-                                    switch (num2)
+                                    bool NewEnter = false;
+                                    do
                                     {
-                                        case 1:
-                                            {
-                                                Console.WriteLine("Введите новый ID.");
-                                                string ins = Console.ReadLine();
-                                                clients[num-1].id = ins;
-                                                Console.WriteLine("Хотите изменить что-то еще? 1. Да; 2. Нет.");
-                                                int select1 = InputInfo.InputNavigate2();
-                                                if(select1 == 2)
+                                        Console.WriteLine("Что вы хотите изменить: \n1.ID \n2.Passport number\n3.Payment\nВыберите номер перед пунктом меню для перехода.");
+                                        int num2 = InputInfo.InputNavigate1();
+
+                                        switch (num2)
+                                        {
+                                            case 1:
                                                 {
-                                                    NewEnter = true;
+                                                    Console.WriteLine("Введите новый ID.");
+                                                    string ins = Console.ReadLine();
+                                                    clients[num - 1].id = ins;
+                                                    Console.WriteLine("Хотите изменить что-то еще? 1. Да; 2. Нет.");
+                                                    int select1 = InputInfo.InputNavigate2();
+                                                    if (select1 == 2)
+                                                    {
+                                                        NewEnter = true;
+                                                    }
+                                                    break;
                                                 }
-                                                break;
-                                            }
-                                        case 2:
-                                            {
-                                                Console.WriteLine("Введите новый Passport Number.");
-                                                string ins = Console.ReadLine();
-                                                clients[num-1].passportnumber = ins;
-                                                Console.WriteLine("Хотите изменить что-то еще? 1. Да; 2. Нет.");
-                                                int select1 = InputInfo.InputNavigate2();
-                                                if (select1 == 2)
+                                            case 2:
                                                 {
-                                                    NewEnter = true;
+                                                    Console.WriteLine("Введите новый Passport Number.");
+                                                    string ins = Console.ReadLine();
+                                                    clients[num - 1].passportnumber = ins;
+                                                    Console.WriteLine("Хотите изменить что-то еще? 1. Да; 2. Нет.");
+                                                    int select1 = InputInfo.InputNavigate2();
+                                                    if (select1 == 2)
+                                                    {
+                                                        NewEnter = true;
+                                                    }
+                                                    break;
                                                 }
-                                                break;
-                                            }
-                                        case 3:
-                                            {
-                                                Console.WriteLine("Введите новый Payment.");
-                                                string ins = Console.ReadLine();
-                                                clients[num-1].payment = ins;
-                                                Console.WriteLine("Хотите изменить что-то еще? 1. Да; 2. Нет.");
-                                                int select1 = InputInfo.InputNavigate2();
-                                                if (select1 == 2)
+                                            case 3:
                                                 {
-                                                    NewEnter = true;
+                                                    Console.WriteLine("Введите новый Payment.");
+                                                    string ins = Console.ReadLine();
+                                                    clients[num - 1].payment = ins;
+                                                    Console.WriteLine("Хотите изменить что-то еще? 1. Да; 2. Нет.");
+                                                    int select1 = InputInfo.InputNavigate2();
+                                                    if (select1 == 2)
+                                                    {
+                                                        NewEnter = true;
+                                                    }
+                                                    break;
                                                 }
-                                                break;
-                                            }
+                                        }
+                                    }
+                                    while (NewEnter == false);
+                                    using (StreamWriter sw = File.CreateText(newpath))
+                                    {
+                                        foreach (Client c in clients)
+                                        {
+                                            sw.WriteLine($"{c.id}; {c.passportnumber};{c.payment}");
+                                        }
                                     }
                                 }
-                                while (NewEnter == false);
-                                using (StreamWriter sw = File.CreateText(newpath))
-                                {
-                                    foreach (Client c in clients)
-                                    {
-                                        sw.WriteLine($"{c.id}; {c.passportnumber};{c.payment}");
-                                    }
-                                }
+                            }
+                            else
+                            {
+                                Console.WriteLine("Нулевой строчки не существует. Начните с 1.");
                             }
                             break;
                         }
